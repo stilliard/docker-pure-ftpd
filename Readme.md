@@ -51,3 +51,10 @@ And restart it:
 ```bash
 /usr/sbin/pure-ftpd -c 30 -C 1 -l puredb:/etc/pure-ftpd/pureftpd.pdb -x -E -j -R &
 ```
+
+----------------------------------------
+
+Credits
+-------------
+Thanks for the help on stackoverflow with this!
+http://stackoverflow.com/questions/23930167/installing-pure-ftpd-in-docker-debian-wheezy-error-421
