@@ -10,7 +10,7 @@ sudo docker pull stilliard/pure-ftpd
 Or via git clone:
 ```bash
 # Clone the repo
-git clone https://github.com/docker-pure-ftpd.git
+git clone https://github.com/stilliard/docker-pure-ftpd.git
 # Build the image
 make build
 # Run as a container:
