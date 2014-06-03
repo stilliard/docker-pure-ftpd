@@ -14,7 +14,7 @@ deb-src http://security.debian.org wheezy/updates main\n\
 RUN apt-get -y update
 
 # install package building helpers
-RUN apt-get -y install dpkg-dev debhelper
+RUN apt-get -y --force-yes install dpkg-dev debhelper
 
 # install dependancies
 RUN apt-get -y build-dep pure-ftpd
