@@ -32,6 +32,9 @@ RUN dpkg -i /tmp/pure-ftpd/pure-ftpd-common*.deb
 RUN apt-get -y install openbsd-inetd
 RUN dpkg -i /tmp/pure-ftpd/pure-ftpd_*.deb
 
+# Prevent pure-ftpd upgrading
+RUN apt-mark hold pure-ftpd pure-ftpd-common
+
 # setup ftpgroup and ftpuser
 RUN groupadd ftpgroup
 RUN useradd -g ftpgroup -d /dev/null -s /etc ftpuser
