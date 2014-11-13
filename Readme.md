@@ -17,10 +17,10 @@ make build
 make run
 ```
 
-Once inside
----------------
+Example usage once inside
+------------------------------
 
-Create an ftp user: `e.g. bob with access only to /home/ftpusers/bob`
+Create an ftp user: `e.g. bob with chroot access only to /home/ftpusers/bob`
 ```bash
 pure-pw useradd bob -u ftpuser -d /home/ftpusers/bob
 pure-pw mkdb
