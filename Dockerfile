@@ -40,7 +40,6 @@ RUN groupadd ftpgroup
 RUN useradd -g ftpgroup -d /dev/null -s /etc ftpuser
 
 # startup
-CMD /usr/sbin/pure-ftpd -c 30 -C 1 -l puredb:/etc/pure-ftpd/pureftpd.pdb -x -E -j -R &\
-	/bin/bash
+CMD /usr/sbin/pure-ftpd -c 30 -C 1 -l puredb:/etc/pure-ftpd/pureftpd.pdb -x -E -j -R
 
 EXPOSE 21/tcp
