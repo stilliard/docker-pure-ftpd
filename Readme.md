@@ -17,6 +17,18 @@ make build
 make run
 ```
 
+Starting it 
+------------------------------
+
+`docker run -p 21:21 --name ftpd_server stilliard/pure-ftpd `
+
+If you want to have it run in background add -d
+
+Operating it
+------------------------------
+
+`docker exec -it ftpd_server /bin/bash`
+
 Example usage once inside
 ------------------------------
 
