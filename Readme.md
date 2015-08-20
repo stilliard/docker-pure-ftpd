@@ -57,15 +57,20 @@ ftp -p localhost 21
 
 ----------------------------------------
 
-By default the server is already started, but you can stop it:
-```bash
-killall -9 pure-ftpd
+Default pure-ftpd options explained
+-------------------------------------
+
+```
+/usr/sbin/pure-ftpd # path to pure-ftpd executable
+-c 50 # --maxclientsnumber (no more than 50 people at once)
+-C 10 # --maxclientsperip (no more than 10 requests from the same ip)
+-l puredb:/etc/pure-ftpd/pureftpd.pdb # --login (login file for virtual users)
+-E # --noanonymous (only real users)
+-j # --createhomedir (auto create home directory if it doesnt already exist)
+-R # --nochmod (prevent usage of the CHMOD command)
 ```
 
-And restart it:
-```bash
-/usr/sbin/pure-ftpd -c 30 -C 1 -l puredb:/etc/pure-ftpd/pureftpd.pdb -x -E -j -R &
-```
+For more information please see `man pure-ftpd`, or visit: https://www.pureftpd.org/
 
 ----------------------------------------
 
