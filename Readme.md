@@ -7,6 +7,8 @@ Pull down with docker:
 sudo docker pull stilliard/pure-ftpd
 ```
 
+----------------------------------------
+
 **My advice is to extend this image to make any changes.**  
 This is because rebuilding the entire docker image via a fork can be slow as it rebuilds the entire pure-ftpd package from source. 
 
@@ -19,6 +21,7 @@ FROM stilliard/pure-ftpd
 CMD /usr/sbin/pure-ftpd -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R 
 ```
 
+----------------------------------------
 
 Starting it 
 ------------------------------
@@ -42,10 +45,7 @@ pure-pw mkdb
 ```
 *No restart should be needed.*
 
-More info on usage here:
-
-- http://download.pureftpd.org/pure-ftpd/doc/README.Virtual-Users
-- http://www.debianhelp.co.uk/pureftp.htm
+More info on usage here: https://download.pureftpd.org/pure-ftpd/doc/README.Virtual-Users
 
 
 Test your connection
@@ -91,4 +91,4 @@ make enter
 Credits
 -------------
 Thanks for the help on stackoverflow with this!
-http://stackoverflow.com/questions/23930167/installing-pure-ftpd-in-docker-debian-wheezy-error-421
+https://stackoverflow.com/questions/23930167/installing-pure-ftpd-in-docker-debian-wheezy-error-421
