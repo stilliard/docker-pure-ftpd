@@ -1,9 +1,11 @@
 
 FROM debian:wheezy
 
-ENV DEBIAN_FRONTEND noninteractive
+# feel free to change this ;)
+MAINTAINER Andrew Stilliard <andrew.stilliard@gmail.com>
 
 # properly setup debian sources
+ENV DEBIAN_FRONTEND noninteractive
 RUN echo "deb http://http.debian.net/debian wheezy main\n\
 deb-src http://http.debian.net/debian wheezy main\n\
 deb http://http.debian.net/debian wheezy-updates main\n\
