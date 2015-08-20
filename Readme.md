@@ -2,19 +2,9 @@
 Docker Pure-ftpd Server
 ============================
 
-Pull to docker:
+Pull down with docker:
 ```bash
 sudo docker pull stilliard/pure-ftpd
-```
-
-Or via git clone:
-```bash
-# Clone the repo
-git clone https://github.com/stilliard/docker-pure-ftpd.git
-# Build the image
-make build
-# Run as a container:
-make run
 ```
 
 Starting it 
@@ -65,6 +55,20 @@ And restart it:
 ```
 
 ----------------------------------------
+
+
+Development (via git clone)
+```bash
+# Clone the repo
+git clone https://github.com/stilliard/docker-pure-ftpd.git
+cd docker-pure-ftpd
+# Build the image
+make build
+# Run container in background:
+make run
+# enter a bash shell insdie the container:
+make enter
+```
 
 Credits
 -------------
