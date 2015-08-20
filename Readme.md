@@ -7,6 +7,19 @@ Pull down with docker:
 sudo docker pull stilliard/pure-ftpd
 ```
 
+**My advice is to extend this image to make any changes.**  
+This is because rebuilding the entire docker image via a fork can be slow as it rebuilds the entire pure-ftpd package from source. 
+
+Instead you can create a new project with a `DOCKERFILE` like so:
+
+```
+FROM stilliard/pure-ftpd
+
+# e.g. you could change the defult command run:
+CMD /usr/sbin/pure-ftpd -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R 
+```
+
+
 Starting it 
 ------------------------------
 
