@@ -41,7 +41,10 @@ RUN apt-mark hold pure-ftpd pure-ftpd-common
 RUN groupadd ftpgroup
 RUN useradd -g ftpgroup -d /dev/null -s /etc ftpuser
 
+ENV PURE_PASSWDFILE /etc/pure-ftpd/pureftpd.passwd
+ENV PURE_DBFILE /etc/pure-ftpd/pureftpd.pdb
+
 # startup
-CMD /usr/sbin/pure-ftpd -c 50 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R
+CMD /usr/sbin/pure-ftpd -c 50 -C 10 -l "puredb:${PURE_DBFILE}" -E -j -R
 
 EXPOSE 21/tcp
