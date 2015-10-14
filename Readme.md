@@ -26,7 +26,7 @@ CMD /usr/sbin/pure-ftpd -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -
 Starting it 
 ------------------------------
 
-`docker run -d -p 21:21 --name ftpd_server stilliard/pure-ftpd `
+`docker run -d  -p 30000-30009:30000-30009 -p 21:21 -p 20:20 --name ftpd_server stilliard/pure-ftpd `
 
 Operating it
 ------------------------------
