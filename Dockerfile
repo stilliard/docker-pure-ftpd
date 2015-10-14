@@ -42,6 +42,12 @@ RUN groupadd ftpgroup
 RUN useradd -g ftpgroup -d /dev/null -s /etc ftpuser
 
 # startup
-CMD /usr/sbin/pure-ftpd -c 50 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R
+#CMD /usr/sbin/pure-ftpd -c 50 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R
+#Will be change 1.2.3.4, It is Server IP
+CMD /usr/sbin/pure-ftpd -P 1.2.3.4 -p 30000:30009 -O CLF:/var/log/pure-ftpd/transfer.log -l puredb:/etc/pure-ftpd/pureftpd.pdb -x -E -j
 
-EXPOSE 21/tcp
+#EXPOSE 21/tcp
+#Passive mode used 30000-30009
+EXPOSE 20 21 30000 30001 30002 30003 30004 30005 30006 30007 30008 30009
+
+
