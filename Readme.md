@@ -26,7 +26,7 @@ CMD /usr/sbin/pure-ftpd -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -
 Starting it 
 ------------------------------
 
-`docker run -d -p 21:21 --name ftpd_server stilliard/pure-ftpd `
+`docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" `
 
 Operating it
 ------------------------------
@@ -66,9 +66,15 @@ Default pure-ftpd options explained
 -E # --noanonymous (only real users)
 -j # --createhomedir (auto create home directory if it doesnt already exist)
 -R # --nochmod (prevent usage of the CHMOD command)
+-P $PUBLICHOST # IP/Host setting for PASV support, passed in your the PUBLICHOST env var
+-p 30000:30009 # PASV port range
 ```
 
 For more information please see `man pure-ftpd`, or visit: https://www.pureftpd.org/
+
+Why so many ports opened?
+---------------------------
+This is for PASV support, please see: [#5 PASV not fun :)](https://github.com/stilliard/docker-pure-ftpd/issues/5)
 
 ----------------------------------------
 
