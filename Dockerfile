@@ -39,7 +39,7 @@ RUN apt-mark hold pure-ftpd pure-ftpd-common
 
 # setup ftpgroup and ftpuser
 RUN groupadd ftpgroup
-RUN useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+RUN useradd -g ftpgroup -d /home/ftpusers -s /dev/null ftpuser
 
 ENV PUBLICHOST ftp.foo.com
 
