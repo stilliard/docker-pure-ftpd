@@ -4,8 +4,10 @@ Docker Pure-ftpd Server
 
 Pull down with docker:
 ```bash
-sudo docker pull stilliard/pure-ftpd
+docker pull stilliard/pure-ftpd
 ```
+
+**Often needing to run as `sudo`, e.g. `sudo docker pull stilliard/pure-ftpd`**
 
 ----------------------------------------
 
@@ -21,12 +23,16 @@ FROM stilliard/pure-ftpd
 CMD /usr/sbin/pure-ftpd -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R 
 ```
 
+*Then you can build your own image, `docker build --rm -t my-pure-ftp .`, where my-pure-ftp is the name you want to build as*
+
 ----------------------------------------
 
 Starting it 
 ------------------------------
 
-`docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" `
+`docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" stilliard/pure-ftpd`
+
+*Or for your own image, replace stilliard/pure-ftpd with the name you built it with, e.g. my-pure-ftp*
 
 Operating it
 ------------------------------
