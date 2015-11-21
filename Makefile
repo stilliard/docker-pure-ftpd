@@ -1,10 +1,10 @@
-.PHONY: build run kill enter
+.PHONY: build run kill enter push pull
 
 build:
-	sudo docker build --rm -t wheezy-pure-ftp-demo .
+	sudo docker build --rm -t pure-ftp-demo .
 
 run: kill
-	sudo docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" wheezy-pure-ftp-demo
+	sudo docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" pure-ftp-demo
 
 kill:
 	-sudo docker kill ftpd_server
