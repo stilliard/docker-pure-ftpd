@@ -4,7 +4,7 @@ Docker Pure-ftpd Server
 
 Pull down with docker:
 ```bash
-docker pull stilliard/pure-ftpd
+docker pull stilliard/pure-ftpd:hardened
 ```
 
 **Often needing to run as `sudo`, e.g. `sudo docker pull stilliard/pure-ftpd`**
@@ -61,8 +61,33 @@ ftp -p localhost 21
 
 ----------------------------------------
 
-Default pure-ftpd options explained
--------------------------------------
+Tags available for different versions
+--------------------------------------
+
+**Latest versions**
+
+- `latest` - latest working version
+- `jessie-latest` - latest but will always remain on debian jessie
+- `hardened` - latest + [more secure/hardened defaults](https://github.com/stilliard/docker-pure-ftpd/issues/10)
+
+**Previous version before tags were introduced**
+
+- `wheezy-1.0.36` - incase you want to roll back to before we started using debian jessie
+
+**Specific pure-ftpd versions**
+
+- `jessie-1.x.x` - jessie + specific versions, e.g. jessie-1.0.36
+- `hardened-1.x.x` - hardened + specific versions
+
+*Check the tags on github for available versions, feel free to submit issues and/or pull requests for newer versions*
+
+Usage of specific tags: 
+`sudo docker pull stilliard/pure-ftpd:hardened-1.0.36`
+
+----------------------------------------
+
+Our default pure-ftpd options explained
+----------------------------------------
 
 ```
 /usr/sbin/pure-ftpd # path to pure-ftpd executable
