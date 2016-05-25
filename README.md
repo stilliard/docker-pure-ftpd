@@ -127,3 +127,7 @@ Credits
 -------------
 Thanks for the help on stackoverflow with this!
 https://stackoverflow.com/questions/23930167/installing-pure-ftpd-in-docker-debian-wheezy-error-421
+
+
+Development sponsored by [ecommerce.co.uk](https://www.ecommerce.co.uk/?utm_source=docker-pureftpd&utm_medium=referral&utm_campaign=open-source)
+
