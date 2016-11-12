@@ -20,7 +20,7 @@ Instead you can create a new project with a `DOCKERFILE` like so:
 FROM stilliard/pure-ftpd
 
 # e.g. you could change the defult command run:
-CMD /usr/sbin/pure-ftpd -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R 
+CMD /run.sh -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R 
 ```
 
 *Then you can build your own image, `docker build --rm -t my-pure-ftp .`, where my-pure-ftp is the name you want to build as*
@@ -109,7 +109,27 @@ This is for PASV support, please see: [#5 PASV not fun :)](https://github.com/st
 
 ----------------------------------------
 
+Keep user database in a volume
+------------------------------
+You may want to keep your user database through the successive image builds. It is possible with Docker volumes.
 
+Create a named volume:
+```
+docker volume create --name my-db-volume
+```
+
+Specify it when running the container:
+```
+docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" stilliard/pure-ftpd:hardened -v my-db-volume:/etc/pure-ftpd/passwd
+```
+
+When an user is added, you need to use the password file which is in the volume:
+```
+pure-pw useradd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /home/ftpusers/bob
+```
+(Thanks to the -m option, you don't need to call *pure-pw mkdb* with this syntax).
+
+----------------------------------------
 Development (via git clone)
 ```bash
 # Clone the repo
