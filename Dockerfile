@@ -41,9 +41,12 @@ RUN apt-mark hold pure-ftpd pure-ftpd-common
 RUN groupadd ftpgroup
 RUN useradd -g ftpgroup -d /home/ftpusers -s /dev/null ftpuser
 
+COPY run.sh /run.sh
+RUN chmod u+x /run.sh
+
 ENV PUBLICHOST ftp.foo.com
 
-VOLUME /home/ftpusers
+VOLUME ["/home/ftpusers", "/etc/pure-ftpd/passwd"]
 
 
 # Secure defaults, ref: https://github.com/stilliard/docker-pure-ftpd/issues/10
@@ -53,7 +56,7 @@ RUN cd /etc/pure-ftpd/conf/ && \
 
 
 # startup
-CMD /usr/sbin/pure-ftpd -c 50 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -p 30000:30009
+CMD /run.sh -c 50 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -p 30000:30009
 
 EXPOSE 21 30000-30009
 
