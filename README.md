@@ -44,8 +44,7 @@ Example usage once inside
 
 Create an ftp user: `e.g. bob with chroot access only to /home/ftpusers/bob`
 ```bash
-pure-pw useradd bob -u ftpuser -d /home/ftpusers/bob
-pure-pw mkdb
+pure-pw useradd bob -m -u ftpuser -d /home/ftpusers/bob
 ```
 *No restart should be needed.*
 
