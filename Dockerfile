@@ -16,7 +16,7 @@ deb-src http://security.debian.org jessie/updates main\n\
 RUN apt-get -y update
 
 # install package building helpers
-RUN apt-get -y --force-yes install dpkg-dev debhelper
+RUN apt-get -y --force-yes --fix-missing install dpkg-dev debhelper
 
 # install dependancies
 RUN apt-get -y build-dep pure-ftpd
@@ -26,6 +26,7 @@ RUN mkdir /tmp/pure-ftpd/ && \
 	cd /tmp/pure-ftpd/ && \
 	apt-get source pure-ftpd && \
 	cd pure-ftpd-* && \
+	./configure --with-tls && \
 	sed -i '/^optflags=/ s/$/ --without-capabilities/g' ./debian/rules && \
 	dpkg-buildpackage -b -uc
 

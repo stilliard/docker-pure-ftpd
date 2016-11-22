@@ -98,6 +98,7 @@ Our default pure-ftpd options explained
 -R # --nochmod (prevent usage of the CHMOD command)
 -P $PUBLICHOST # IP/Host setting for PASV support, passed in your the PUBLICHOST env var
 -p 30000:30009 # PASV port range
+-tls 1 # Enables optional TLS support
 ```
 
 For more information please see `man pure-ftpd`, or visit: https://www.pureftpd.org/
@@ -141,6 +142,35 @@ make run
 # enter a bash shell insdie the container:
 make enter
 ```
+
+TLS
+----
+
+If you enable tls (for secure ftp connections), you need to have a valid 
+certificate. You can get one from one of the certificate authorities that you'll
+find when googling this topic. The certificate needs to be at:
+
+```
+/etc/ssl/private/pure-ftpd.pem
+```
+
+Use docker volumes to get the certificate there at runtime.
+
+You can also self-sign a certificate, which is certainly the easiest way to
+start out. Be aware, though, that this isn't really safe, as the client will not
+be able to verify the server, introducing a possibility for attacks.
+
+Here's how to create a self-signed certificate from within the container:
+
+```bash
+mkdir -p /etc/ssl/private
+openssl dhparam -out /etc/ssl/private/pure-ftpd-dhparams.pem 2048
+openssl req -x509 -nodes -newkey rsa:2048 -sha256 -keyout \
+    /etc/ssl/private/pure-ftpd.pem \
+    -out /etc/ssl/private/pure-ftpd.pem
+chmod 600 /etc/ssl/private/*.pem
+```
+
 
 Credits
 -------------
