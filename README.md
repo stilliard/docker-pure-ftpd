@@ -44,7 +44,7 @@ Example usage once inside
 
 Create an ftp user: `e.g. bob with chroot access only to /home/ftpusers/bob`
 ```bash
-pure-pw useradd bob -m -u ftpuser -d /home/ftpusers/bob
+pure-pw useradd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /home/ftpusers/bob
 ```
 *No restart should be needed.*
 
@@ -98,6 +98,7 @@ Our default pure-ftpd options explained
 -R # --nochmod (prevent usage of the CHMOD command)
 -P $PUBLICHOST # IP/Host setting for PASV support, passed in your the PUBLICHOST env var
 -p 30000:30009 # PASV port range
+-tls 1 # Enables optional TLS support
 ```
 
 For more information please see `man pure-ftpd`, or visit: https://www.pureftpd.org/
@@ -107,6 +108,21 @@ Why so many ports opened?
 This is for PASV support, please see: [#5 PASV not fun :)](https://github.com/stilliard/docker-pure-ftpd/issues/5)
 
 ----------------------------------------
+
+Docker Volumes
+--------------
+There are a few spots onto which you can mount a docker volume to configure the
+server and persist uploaded data. It's recommended to use them in production. 
+
+  - `/home/ftpusers/` The ftp's data volume (by convention). 
+  - `/etc/pure-ftpd/passwd` A directory containing the single `pureftps.passwd`
+    file which contains the user database (i.e., all virtual users, their
+    passwords and their home directories). This is read on startup of the
+    container and updated by the `pure-pw useradd -f /etc/pure-
+    ftpd/passwd/pureftpd.passwd ...` command.
+  - `/etc/ssl/private/` A directory containing a single `pure-ftpd.pem` file
+    with the server's SSL certificates for TLS support. Optional TLS is
+    automatically enabled when the container finds this file on startup.
 
 Keep user database in a volume
 ------------------------------
@@ -128,6 +144,7 @@ pure-pw useradd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /h
 ```
 (Thanks to the -m option, you don't need to call *pure-pw mkdb* with this syntax).
 
+
 ----------------------------------------
 Development (via git clone)
 ```bash
@@ -141,6 +158,37 @@ make run
 # enter a bash shell insdie the container:
 make enter
 ```
+
+TLS
+----
+
+If you want to enable tls (for ftps connections), you need to have a valid
+certificate. You can get one from one of the certificate authorities that you'll
+find when googling this topic. The certificate (containing private key and
+certificate) needs to be at:
+
+```
+/etc/ssl/private/pure-ftpd.pem
+```
+
+Use docker volumes to get the certificate there at runtime. The container will
+automatically enable optional TLS when it detect the file at this location.
+
+You can also self-sign a certificate, which is certainly the easiest way to
+start out. Self signed certificates come with certain drawbacks, but it might
+be better to have a self signed one than none at all.
+
+Here's how to create a self-signed certificate from within the container:
+
+```bash
+mkdir -p /etc/ssl/private
+openssl dhparam -out /etc/ssl/private/pure-ftpd-dhparams.pem 2048
+openssl req -x509 -nodes -newkey rsa:2048 -sha256 -keyout \
+    /etc/ssl/private/pure-ftpd.pem \
+    -out /etc/ssl/private/pure-ftpd.pem
+chmod 600 /etc/ssl/private/*.pem
+```
+
 
 Credits
 -------------
