@@ -42,11 +42,21 @@ RUN apt-mark hold pure-ftpd pure-ftpd-common
 RUN groupadd ftpgroup
 RUN useradd -g ftpgroup -d /home/ftpusers -s /dev/null ftpuser
 
+# rsyslog for logging (ref https://github.com/stilliard/docker-pure-ftpd/issues/17)
+RUN apt-get install -y rsyslog && \
+	echo "" >> /etc/rsyslog.conf && \
+	echo "#PureFTP Custom Logging" >> /etc/rsyslog.conf && \
+	echo "ftp.* /var/log/pure-ftpd/pureftpd.log" >> /etc/rsyslog.conf && \
+	echo "Updated /etc/rsyslog.conf with /var/log/pure-ftpd/pureftpd.log"
+
+# setup run/init file
 COPY run.sh /run.sh
 RUN chmod u+x /run.sh
 
+# default publichost, you'll need to set this for passive support
 ENV PUBLICHOST ftp.foo.com
 
+# couple available volumes you may want to use
 VOLUME ["/home/ftpusers", "/etc/pure-ftpd/passwd"]
 
 # startup
