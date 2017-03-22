@@ -34,6 +34,10 @@ Starting it
 
 *Or for your own image, replace stilliard/pure-ftpd with the name you built it with, e.g. my-pure-ftp*
 
+You can also pass ADDED_FLAGS as an env variable to add additional options such as --tls to the pure-ftpd command.  
+e.g. ` -e "ADDED_FLAGS=--tls=2" `
+
+
 Operating it
 ------------------------------
 
