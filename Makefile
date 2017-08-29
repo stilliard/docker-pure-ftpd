@@ -1,4 +1,4 @@
-.PHONY: build run kill enter push pull
+.PHONY: build run kill enter setup-bob test-bob push pull
 
 build:
 	sudo docker build --rm -t pure-ftp-demo .
@@ -12,6 +12,25 @@ kill:
 
 enter:
 	sudo docker exec -it ftpd_server sh -c "export TERM=xterm && bash"
+
+# Setup test "bob" user with "test" as password
+setup-bob:
+	sudo docker exec -it ftpd_server sh -c "(echo test; echo test) | pure-pw useradd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /home/ftpusers/bob"
+	@echo "User bob setup with password: test"
+
+# simple test to list files, upload a file, download it to a new name, delete it via ftp and read the new local one to make sure it's in tact
+test-bob:
+	echo "Test file was read successfully!" > test-orig-file.txt
+	echo "user bob test\n\
+	ls -alh\n\
+	put test-orig-file.txt\n\
+	ls -alh\n\
+	get test-orig-file.txt test-new-file.txt\n\
+	delete test-orig-file.txt\n\
+	ls -alh" | ftp -n -v -p localhost 21
+	cat test-new-file.txt
+	rm test-orig-file.txt test-new-file.txt
+
 
 # git commands for quick chaining of make commands
 push:
