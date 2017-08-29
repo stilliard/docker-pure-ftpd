@@ -175,6 +175,13 @@ pure-pw useradd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /h
 (Thanks to the -m option, you don't need to call *pure-pw mkdb* with this syntax).
 
 
+Changing a password
+---------------------
+e.g. to change the password for user "bob":
+```
+pure-pw passwd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m
+```
+
 ----------------------------------------
 Development (via git clone)
 ```bash
