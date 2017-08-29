@@ -2,6 +2,8 @@
 Docker Pure-ftpd Server
 ============================
 
+[![Build Status](https://travis-ci.org/stilliard/docker-pure-ftpd.svg?branch=master)](https://travis-ci.org/stilliard/docker-pure-ftpd)
+
 Pull down with docker:
 ```bash
 docker pull stilliard/pure-ftpd:hardened
