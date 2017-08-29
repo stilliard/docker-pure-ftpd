@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - make build
+  - make run
+  - docker ps -a
+  - make setup-bob
+
+script:
+  - make test-bob

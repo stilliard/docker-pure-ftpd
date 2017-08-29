@@ -2,6 +2,8 @@
 Docker Pure-ftpd Server
 ============================
 
+[![Build Status](https://travis-ci.org/stilliard/docker-pure-ftpd.svg?branch=master)](https://travis-ci.org/stilliard/docker-pure-ftpd)
+
 Pull down with docker:
 ```bash
 docker pull stilliard/pure-ftpd:hardened
@@ -20,7 +22,7 @@ Instead you can create a new project with a `DOCKERFILE` like so:
 FROM stilliard/pure-ftpd
 
 # e.g. you could change the defult command run:
-CMD /run.sh -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R 
+CMD /run.sh -c 30 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -p 30000:30059
 ```
 
 *Then you can build your own image, `docker build --rm -t my-pure-ftp .`, where my-pure-ftp is the name you want to build as*
@@ -52,6 +54,8 @@ pure-pw useradd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /h
 ```
 *No restart should be needed.*
 
+*If you have any trouble with volume permissions due to the **uid** or **gid** of the created user you can change the **-u** flag for the uid you would like to use and/or specify **-g** with the group id as well. For more information see issue [#35](https://github.com/stilliard/docker-pure-ftpd/issues/35#issuecomment-325583705).*
+
 More info on usage here: https://download.pureftpd.org/pure-ftpd/doc/README.Virtual-Users
 
 
@@ -61,6 +65,10 @@ From the host machine:
 ```bash
 ftp -p localhost 21
 ```
+
+Max clients
+-------------------------
+By default we set 5 max clients at once, but you can increase this by increasing `-c 5`, e.g. to `-c 50` and then also increasing the number of public ports opened from `-p 30000:30009` `-p 30000:30099`. You'll also want to open those ports when running docker run.
 
 
 Logs
@@ -109,14 +117,14 @@ Our default pure-ftpd options explained
 
 ```
 /usr/sbin/pure-ftpd # path to pure-ftpd executable
--c 50 # --maxclientsnumber (no more than 50 people at once)
--C 10 # --maxclientsperip (no more than 10 requests from the same ip)
+-c 5 # --maxclientsnumber (no more than 5 people at once)
+-C 5 # --maxclientsperip (no more than 5 requests from the same ip)
 -l puredb:/etc/pure-ftpd/pureftpd.pdb # --login (login file for virtual users)
 -E # --noanonymous (only real users)
 -j # --createhomedir (auto create home directory if it doesnt already exist)
 -R # --nochmod (prevent usage of the CHMOD command)
 -P $PUBLICHOST # IP/Host setting for PASV support, passed in your the PUBLICHOST env var
--p 30000:30009 # PASV port range
+-p 30000:30009 # PASV port range (10 ports for 5 max clients)
 -tls 1 # Enables optional TLS support
 ```
 
@@ -213,7 +221,4 @@ Credits
 -------------
 Thanks for the help on stackoverflow with this!
 https://stackoverflow.com/questions/23930167/installing-pure-ftpd-in-docker-debian-wheezy-error-421
-
-
-Development sponsored by [ecommerce.co.uk](https://www.ecommerce.co.uk/?utm_source=docker-pureftpd&utm_medium=referral&utm_campaign=open-source)
 
