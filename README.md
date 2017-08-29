@@ -22,7 +22,7 @@ Instead you can create a new project with a `DOCKERFILE` like so:
 FROM stilliard/pure-ftpd
 
 # e.g. you could change the defult command run:
-CMD /run.sh -c 30 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R 
+CMD /run.sh -c 30 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -p 30000:30059
 ```
 
 *Then you can build your own image, `docker build --rm -t my-pure-ftp .`, where my-pure-ftp is the name you want to build as*
@@ -65,6 +65,10 @@ From the host machine:
 ```bash
 ftp -p localhost 21
 ```
+
+Max clients
+-------------------------
+By default we set 5 max clients at once, but you can increase this by increasing `-c 5`, e.g. to `-c 50` and then also increasing the number of public ports opened from `-p 30000:30009` `-p 30000:30099`. You'll also want to open those ports when running docker run.
 
 
 Logs
@@ -113,14 +117,14 @@ Our default pure-ftpd options explained
 
 ```
 /usr/sbin/pure-ftpd # path to pure-ftpd executable
--c 50 # --maxclientsnumber (no more than 50 people at once)
--C 10 # --maxclientsperip (no more than 10 requests from the same ip)
+-c 5 # --maxclientsnumber (no more than 5 people at once)
+-C 5 # --maxclientsperip (no more than 5 requests from the same ip)
 -l puredb:/etc/pure-ftpd/pureftpd.pdb # --login (login file for virtual users)
 -E # --noanonymous (only real users)
 -j # --createhomedir (auto create home directory if it doesnt already exist)
 -R # --nochmod (prevent usage of the CHMOD command)
 -P $PUBLICHOST # IP/Host setting for PASV support, passed in your the PUBLICHOST env var
--p 30000:30009 # PASV port range
+-p 30000:30009 # PASV port range (10 ports for 5 max clients)
 -tls 1 # Enables optional TLS support
 ```
 
