@@ -54,6 +54,8 @@ pure-pw useradd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /h
 ```
 *No restart should be needed.*
 
+*If you have any trouble with volume permissions due to the **uid** or **gid** of the created user you can change the **-u** flag for the uid you would like to use and/or specify **-g** with the group id as well. For more information see issue [#35](https://github.com/stilliard/docker-pure-ftpd/issues/35#issuecomment-325583705).*
+
 More info on usage here: https://download.pureftpd.org/pure-ftpd/doc/README.Virtual-Users
 
 
