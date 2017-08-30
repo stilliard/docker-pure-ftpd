@@ -1,8 +1,11 @@
 
 Docker Pure-ftpd Server
 ============================
+https://hub.docker.com/r/stilliard/pure-ftpd/
 
 [![Build Status](https://travis-ci.org/stilliard/docker-pure-ftpd.svg?branch=master)](https://travis-ci.org/stilliard/docker-pure-ftpd)
+[![Docker Build Status](https://img.shields.io/docker/build/stilliard/pure-ftpd.svg)](https://hub.docker.com/r/stilliard/pure-ftpd/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/stilliard/pure-ftpd.svg)](https://hub.docker.com/r/stilliard/pure-ftpd/)
 
 Pull down with docker:
 ```bash
@@ -171,6 +174,13 @@ pure-pw useradd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /h
 ```
 (Thanks to the -m option, you don't need to call *pure-pw mkdb* with this syntax).
 
+
+Changing a password
+---------------------
+e.g. to change the password for user "bob":
+```
+pure-pw passwd bob -f /etc/pure-ftpd/passwd/pureftpd.passwd -m
+```
 
 ----------------------------------------
 Development (via git clone)
