@@ -54,7 +54,7 @@ COPY run.sh /run.sh
 RUN chmod u+x /run.sh
 
 # default publichost, you'll need to set this for passive support
-ENV PUBLICHOST ftp.foo.com
+ENV PUBLICHOST localhost
 
 # couple available volumes you may want to use
 VOLUME ["/home/ftpusers", "/etc/pure-ftpd/passwd"]
