@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  ftpd_server:
+    image: stilliard/pure-ftpd:hardened
+    container_name: pure-ftpd
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    volumes:
+      - "/folder_on_disk/data:/home/ftpusers/"
+      - "/folder_on_disk/passwd:/etc/pure-ftpd/passwd"
+      - "/folder_on_disk/ssl:/etc/ssl/private/"
+    environment:
+      PUBLICHOST: "localhost"
+      ADDED_FLAGS: "--tls=2"
+    restart: always
