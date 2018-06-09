@@ -26,6 +26,20 @@ then
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS --tls=1 "
 fi
 
+# Add user
+if [ ! -z "$FTP_USER_NAME" ] && [ ! -z "$FTP_USER_PASS" ] && [ ! -z "$FTP_USER_HOME" ]
+then
+    echo "Creating user..."
+    PWD_FILE="$(mktemp)"
+    echo "$FTP_USER_PASS
+$FTP_USER_PASS" > "$PWD_FILE"
+    pure-pw useradd "$FTP_USER_NAME" -f "$PASSWD_FILE" -m -u ftpuser -d "$FTP_USER_HOME" < "$PWD_FILE"
+    rm "$PWD_FILE"
+else
+    echo "Please set FTP_USER_NAME, FTP_USER_PASS & FTP_USER_HOME env"
+    exit 1
+fi
+
 # let users know what flags we've ended with (useful for debug)
 echo "Starting Pure-FTPd:"
 echo "  pure-ftpd $PURE_FTPD_FLAGS"
