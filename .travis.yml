@@ -6,7 +6,9 @@ services:
 before_install:
   - make build
   - make run
+  - sleep 5
   - docker ps -a
+  - docker logs ftpd_server
   - make setup-bob
 
 script:
