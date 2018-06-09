@@ -48,7 +48,7 @@ Operating it
 
 `docker exec -it ftpd_server /bin/bash`
 
-User
+Setting runtime FTP user
 ------------------------------
 
 To create a user on the ftp container, use the following environment variables: `FTP_USER_NAME`, `FTP_USER_PASS` and `FTP_USER_HOME`.
@@ -58,6 +58,8 @@ To create a user on the ftp container, use the following environment variables: 
 Example usage:
 
 `docker run -e FTP_USER_NAME=bob -e FTP_USER_PASS=12345 -e FTP_USER_HOME=/home/bob stilliard/pure-ftpd`
+
+If you wish to set the `UID` & `GID` of the FTP user, use the `FTP_USER_UID` & `FTP_USER_GID` environment variables.
 
 Using different passive ports
 ------------------------------

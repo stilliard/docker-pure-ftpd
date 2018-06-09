@@ -30,14 +30,27 @@ fi
 if [ ! -z "$FTP_USER_NAME" ] && [ ! -z "$FTP_USER_PASS" ] && [ ! -z "$FTP_USER_HOME" ]
 then
     echo "Creating user..."
+
+    # Generate the file that will be used to inject in the password prompt stdin
     PWD_FILE="$(mktemp)"
     echo "$FTP_USER_PASS
 $FTP_USER_PASS" > "$PWD_FILE"
-    pure-pw useradd "$FTP_USER_NAME" -f "$PASSWD_FILE" -m -u ftpuser -d "$FTP_USER_HOME" < "$PWD_FILE"
+    
+    # Set uid/gid
+    PURE_PW_ADD_FLAGS=""
+    if [ ! -z "$FTP_USER_UID" ]
+    then
+        PURE_PW_ADD_FLAGS="$PURE_PW_ADD_FLAGS -u $FTP_USER_UID"
+    else
+        PURE_PW_ADD_FLAGS="$PURE_PW_ADD_FLAGS -u ftpuser"
+    fi
+    if [ ! -z "$FTP_USER_GID" ]
+    then
+        PURE_PW_ADD_FLAGS="$PURE_PW_ADD_FLAGS -g $FTP_USER_GID"
+    fi
+
+    pure-pw useradd "$FTP_USER_NAME" -f "$PASSWD_FILE" -m -d "$FTP_USER_HOME" $PURE_PW_ADD_FLAGS < "$PWD_FILE"
     rm "$PWD_FILE"
-else
-    echo "Please set FTP_USER_NAME, FTP_USER_PASS & FTP_USER_HOME env"
-    exit 1
 fi
 
 # Set a default value to the env var FTP_PASSIVE_PORTS
