@@ -7,14 +7,16 @@ PURE_FTPD_FLAGS="$@ $ADDED_FLAGS "
 # start rsyslog
 if [[ "$PURE_FTPD_FLAGS" == *" -d "* ]] || [[ "$PURE_FTPD_FLAGS" == *"--verboselog"* ]]
 then
-	echo "Log enabled, see /var/log/messages"
-	rsyslogd
+    echo "Log enabled, see /var/log/messages"
+    rsyslogd
 fi
+
+PASSWD_FILE="/etc/pure-ftpd/passwd/pureftpd.passwd"
 
 # Load in any existing db from volume store
 if [ -e /etc/pure-ftpd/passwd/pureftpd.passwd ]
 then
-    pure-pw mkdb /etc/pure-ftpd/pureftpd.pdb -f /etc/pure-ftpd/passwd/pureftpd.passwd
+    pure-pw mkdb /etc/pure-ftpd/pureftpd.pdb -f "$PASSWD_FILE"
 fi
 
 # detect if using TLS (from volumed in file) but no flag set, set one
