@@ -91,6 +91,16 @@ From the host machine:
 ftp -p localhost 21
 ```
 
+-------------------------
+
+Docker compose
+-------------------------
+Docker compose can help you simplify the orchestration of your containers.   
+We have a simple [example of the docker compose](https://github.com/stilliard/docker-pure-ftpd/blob/master/docker-compose.yml).  
+& here's a [more detailed example using wordpress](https://github.com/stilliard/docker-pure-ftpd/wiki/Docker-stack-with-Wordpress-&-FTP) with ftp using this image.
+
+-------------------------
+
 Max clients
 -------------------------
 By default we set 5 max clients at once, but you can increase this by increasing `-c 5`, e.g. to `-c 50` and then also increasing the number of public ports opened from `-p 30000:30009` `-p 30000:30099`. You'll also want to open those ports when running docker run.
