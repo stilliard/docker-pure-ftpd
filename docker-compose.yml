@@ -1,5 +1,7 @@
 version: '2'
 
+# Usage example: https://github.com/stilliard/docker-pure-ftpd/wiki/Docker-stack-with-Wordpress-&-FTP
+
 services:
   ftpd_server:
     image: stilliard/pure-ftpd:hardened
