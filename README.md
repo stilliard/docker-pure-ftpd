@@ -224,8 +224,10 @@ cd docker-pure-ftpd
 make build
 # Run container in background:
 make run
-# enter a bash shell insdie the container:
+# enter a bash shell inside the container:
 make enter
+# test that it's all working with
+make test
 ```
 
 TLS
