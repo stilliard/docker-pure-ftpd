@@ -1,5 +1,9 @@
 .PHONY: build run kill enter setup-bob test-bob push pull
 
+test: build run sleep setup-bob test-bob
+sleep:
+	sleep 5
+
 build:
 	sudo docker build --rm -t pure-ftp-demo .
 
