@@ -68,7 +68,8 @@ then
 fi
 
 # Set passive port range in pure-ftpd options if not already existent
-if [[ $PURE_FTPD_FLAGS = *" -p "* ]]; then
+if [[ $PURE_FTPD_FLAGS = *" -p "* ]]
+then
     echo "Adding passive port range"
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -p $FTP_PASSIVE_PORTS"
 fi
