@@ -64,13 +64,12 @@ fi
 if [ -z "$FTP_PASSIVE_PORTS" ]
 then
     FTP_PASSIVE_PORTS=30000:30009
-    echo "Setting default port range to $FTP_PASSIVE_PORTS"
 fi
 
 # Set passive port range in pure-ftpd options if not already existent
-if [[ $PURE_FTPD_FLAGS = *" -p "* ]]
+if [[ $PURE_FTPD_FLAGS != *" -p "* ]]
 then
-    echo "Adding passive port range"
+    echo "Setting default port range"
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -p $FTP_PASSIVE_PORTS"
 fi
 
