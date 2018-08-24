@@ -63,12 +63,15 @@ fi
 # Set a default value to the env var FTP_PASSIVE_PORTS
 if [ -z "$FTP_PASSIVE_PORTS" ]
 then
-    FTP_PASSIVE_PORTS="30000:30009"
-    echo "Setting default port range to $FTP_PASSIVE_PORTS"
+    FTP_PASSIVE_PORTS=30000:30009
 fi
-# Set passive port range in pure-ftpd options
-echo "Adding passive port range"
-PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -p$FTP_PASSIVE_PORTS"
+
+# Set passive port range in pure-ftpd options if not already existent
+if [[ $PURE_FTPD_FLAGS != *" -p "* ]]
+then
+    echo "Setting default port range"
+    PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -p $FTP_PASSIVE_PORTS"
+fi
 
 # let users know what flags we've ended with (useful for debug)
 echo "Starting Pure-FTPd:"
