@@ -73,6 +73,32 @@ then
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -p $FTP_PASSIVE_PORTS"
 fi
 
+# Set a default value to the env var FTP_MAX_CLIENTS
+if [ -z "$FTP_MAX_CLIENTS" ]
+then
+    FTP_MAX_CLIENTS=5
+fi
+
+# Set max clients in pure-ftpd options if not already existent
+if [[ $PURE_FTPD_FLAGS != *" -c "* ]]
+then
+    echo "Setting default port range"
+    PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -c $FTP_MAX_CLIENTS"
+fi
+
+# Set a default value to the env var FTP_MAX_CONNECTIONS
+if [ -z "$FTP_MAX_CONNECTIONS" ]
+then
+    FTP_MAX_CONNECTIONS=5
+fi
+
+# Set max connection per ip in pure-ftpd options if not already existent
+if [[ $PURE_FTPD_FLAGS != *" -C "* ]]
+then
+    echo "Setting default port range"
+    PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -C $FTP_MAX_CONNECTIONS"
+fi
+
 # let users know what flags we've ended with (useful for debug)
 echo "Starting Pure-FTPd:"
 echo "  pure-ftpd $PURE_FTPD_FLAGS"
