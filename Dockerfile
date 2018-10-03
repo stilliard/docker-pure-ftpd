@@ -57,6 +57,6 @@ ENV PUBLICHOST localhost
 VOLUME ["/home/ftpusers", "/etc/pure-ftpd/passwd"]
 
 # startup
-CMD /run.sh -c 5 -C 5 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -s -A -j -Z -H -4 -E -R -G -X -x
+CMD /run.sh -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -s -A -j -Z -H -4 -E -R -G -X -x
 
 EXPOSE 21 30000-30009

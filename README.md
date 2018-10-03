@@ -109,7 +109,8 @@ We have a simple [example of the docker compose](https://github.com/stilliard/do
 
 Max clients
 -------------------------
-By default we set 5 max clients at once, but you can increase this by increasing `-c 5`, e.g. to `-c 50` and then also increasing the number of public ports opened from `-p 30000:30009` `-p 30000:30099`. You'll also want to open those ports when running docker run.
+By default we set 5 max clients at once, but you can increase this by using the following environment variable `FTP_MAX_CLIENTS`, e.g. to `FTP_MAX_CLIENTS=50` and then also increasing the number of public ports opened from `FTP_PASSIVE_PORTS=30000:30009` `FTP_PASSIVE_PORTS=30000:30099`. You'll also want to open those ports when running docker run.
+In addition you can specify the maximum connections per ip by setting the environment variable `FTP_MAX_CONNECTIONS`. By default the value is 5.
 
 All Pure-ftpd flags available:
 --------------------------------------
