@@ -57,6 +57,21 @@ $FTP_USER_PASS" > "$PWD_FILE"
         echo " root user give $FTP_USER_NAME ftp user at $FTP_USER_HOME directory has $FTP_USER_HOME_PERMISSION permission"
     fi
 
+    if [ ! -z "$FTP_USER_UID" ]
+    then
+        if ! [[ $(ls -ldn $FTP_USER_HOME | awk '{print $3}') = $FTP_USER_UID ]]
+        then
+            chown $FTP_USER_UID "$FTP_USER_HOME"
+            echo " root user give $FTP_USER_HOME directory $FTP_USER_UID owner"
+        fi
+    else
+        if ! [[ $(ls -ld $FTP_USER_HOME | awk '{print $3}') = 'ftpuser' ]]
+        then
+            chown ftpuser "$FTP_USER_HOME"
+            echo " root user give $FTP_USER_HOME directory ftpuser owner"
+        fi
+    fi
+
     rm "$PWD_FILE"
 fi
 
