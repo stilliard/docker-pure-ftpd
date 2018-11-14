@@ -26,6 +26,23 @@ then
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS --tls=1 "
 fi
 
+# If TLS flag is set and no certificate exists, generate it
+if [ ! -e /etc/ssl/private/pure-ftpd.pem ] && [[ "$PURE_FTPD_FLAGS" == *"--tls"* ]] && [ ! -z "$TLS_CN" ] && [ ! -z "$TLS_ORG" ] && [ ! -z "$TLS_C" ]
+then
+    echo "Generating self-signed certificate"
+    mkdir -p /etc/ssl/private
+    if [[ "$TLS_USE_DSAPRAM" == "true" ]]; then
+        openssl dhparam -dsaparam -out /etc/ssl/private/pure-ftpd-dhparams.pem 2048
+    else
+        openssl dhparam -out /etc/ssl/private/pure-ftpd-dhparams.pem 2048
+    fi
+    openssl req -subj "/CN=${TLS_CN}/O=${TLS_ORG}/C=${TLS_C}" -days 1826 \
+        -x509 -nodes -newkey rsa:2048 -sha256 -keyout \
+        /etc/ssl/private/pure-ftpd.pem \
+        -out /etc/ssl/private/pure-ftpd.pem
+    chmod 600 /etc/ssl/private/*.pem
+fi
+
 # Add user
 if [ ! -z "$FTP_USER_NAME" ] && [ ! -z "$FTP_USER_PASS" ] && [ ! -z "$FTP_USER_HOME" ]
 then

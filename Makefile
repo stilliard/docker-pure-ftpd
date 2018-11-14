@@ -1,14 +1,26 @@
-.PHONY: build run kill enter setup-bob test-bob push pull
+.PHONY: test test-tls build run run-tls kill enter setup-bob test-bob push pull
 
-test: build run sleep setup-bob test-bob
-sleep:
-	sleep 5
+test: build run logs-for-5 setup-bob test-bob
+
+test-tls: build run-tls logs-for-5 setup-bob test-bob-tls
+
+# tail logs for a set number of seconds
+logs-for-%:
+	@echo "-----"
+	@echo "watching logs for next $* seconds"
+	@echo "-----"
+	-timeout -s9 $* sudo docker logs -f ftpd_server
 
 build:
 	sudo docker build --rm -t pure-ftp-demo .
 
 run: kill
 	sudo docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" -e "ADDED_FLAGS=-d -d" pure-ftp-demo
+
+run-tls: kill
+	-sudo docker volume rm ftp_tls
+	sudo docker volume create --name ftp_tls
+	sudo docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" -e "ADDED_FLAGS=-d -d --tls 2" -e "TLS_CN=localhost" -e "TLS_ORG=Demo" -e "TLS_C=UK" -e"TLS_USE_DSAPRAM=true" -v ftp_tls:/etc/ssl/private/ pure-ftp-demo
 
 kill:
 	-sudo docker kill ftpd_server
@@ -35,6 +47,18 @@ test-bob:
 	cat test-new-file.txt
 	rm test-orig-file.txt test-new-file.txt
 
+# test again but with tls (uses lftp for tls support)
+test-bob-tls:
+	echo "Test file was read successfully!" > test-orig-file.txt
+	cert="$$(sudo docker volume inspect --format '{{ .Mountpoint }}' ftp_tls)/pure-ftpd.pem";\
+	echo "ls -alh\n\
+	put test-orig-file.txt\n\
+	ls -alh\n\
+	get test-orig-file.txt -o test-new-file.txt\n\
+	rm test-orig-file.txt\n\
+	ls -alh" | sudo lftp -u bob,test -e "set ssl:ca-file '$$cert'" localhost 21
+	cat test-new-file.txt
+	sudo rm test-orig-file.txt test-new-file.txt
 
 # git commands for quick chaining of make commands
 push:

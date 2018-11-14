@@ -5,11 +5,13 @@ services:
 
 before_install:
   - make build
-  - make run
-  - sleep 5
+  - make run-tls
+  - make logs-for-5
   - docker ps -a
-  - docker logs ftpd_server
   - make setup-bob
 
+install:
+  - sudo apt-get install lftp
+
 script:
-  - make test-bob
+  - make test-bob-tls

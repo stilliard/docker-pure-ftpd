@@ -270,6 +270,17 @@ openssl req -x509 -nodes -newkey rsa:2048 -sha256 -keyout \
 chmod 600 /etc/ssl/private/*.pem
 ```
 
+Automatic TLS certificate generation
+------------------------------
+
+If `ADDED_FLAGS` contains `--tls` and file `/etc/ssl/private/pure-ftpd.pem` does not exists
+it is possible to generate self-signed certificate if `TLS_CN`, `TLS_ORG` and `TLS_C` are set.
+
+Keep in mind that if no volume is set for `/etc/ssl/private/` directory generated
+certificates won't be persisted and new ones will be generated on each start.
+
+You can also pass `-e "TLS_USE_DSAPRAM=true"` for faster generated certificates
+though this option is not recommended for production.
 
 Credits
 -------------
