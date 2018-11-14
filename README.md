@@ -279,6 +279,9 @@ it is possible to generate self-signed certificate if `TLS_CN`, `TLS_ORG` and `T
 Keep in mind that if no volume is set for `/etc/ssl/private/` directory generated
 certificates won't be persisted and new ones will be generated on each start.
 
+You can also pass `-e "TLS_USE_DSAPRAM=true"` for faster generated certificates
+though this option is not recommended for production.
+
 Credits
 -------------
 Thanks for the help on stackoverflow with this!

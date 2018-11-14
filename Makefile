@@ -20,7 +20,7 @@ run: kill
 run-tls: kill
 	-sudo docker volume rm ftp_tls
 	sudo docker volume create --name ftp_tls
-	sudo docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" -e "ADDED_FLAGS=-d -d --tls 2" -e "TLS_CN=localhost" -e "TLS_ORG=Demo" -e "TLS_C=UK" -v ftp_tls:/etc/ssl/private/ pure-ftp-demo
+	sudo docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" -e "ADDED_FLAGS=-d -d --tls 2" -e "TLS_CN=localhost" -e "TLS_ORG=Demo" -e "TLS_C=UK" -e"TLS_USE_DSAPRAM=true" -v ftp_tls:/etc/ssl/private/ pure-ftp-demo
 
 kill:
 	-sudo docker kill ftpd_server
