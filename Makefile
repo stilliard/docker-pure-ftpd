@@ -53,9 +53,11 @@ test-bob-tls:
 	cert="$$(sudo docker volume inspect --format '{{ .Mountpoint }}' ftp_tls)/pure-ftpd.pem";\
 	echo "ls -alh\n\
 	put test-orig-file.txt\n\
+	echo '~ uploaded file ~'\n\
 	ls -alh\n\
 	get test-orig-file.txt -o test-new-file.txt\n\
 	rm test-orig-file.txt\n\
+	echo '~ removed file ~'\n\
 	ls -alh" | sudo lftp -u bob,test -e "set ssl:ca-file '$$cert'" localhost 21
 	cat test-new-file.txt
 	sudo rm test-orig-file.txt test-new-file.txt

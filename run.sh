@@ -101,7 +101,7 @@ fi
 # Set passive port range in pure-ftpd options if not already existent
 if [[ $PURE_FTPD_FLAGS != *" -p "* ]]
 then
-    echo "Setting default port range"
+    echo "Setting default port range to: $FTP_PASSIVE_PORTS"
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -p $FTP_PASSIVE_PORTS"
 fi
 
@@ -114,7 +114,7 @@ fi
 # Set max clients in pure-ftpd options if not already existent
 if [[ $PURE_FTPD_FLAGS != *" -c "* ]]
 then
-    echo "Setting default port range"
+    echo "Setting default max clients to: $FTP_MAX_CLIENTS"
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -c $FTP_MAX_CLIENTS"
 fi
 
@@ -124,10 +124,10 @@ then
     FTP_MAX_CONNECTIONS=5
 fi
 
-# Set max connection per ip in pure-ftpd options if not already existent
+# Set max connections per ip in pure-ftpd options if not already existent
 if [[ $PURE_FTPD_FLAGS != *" -C "* ]]
 then
-    echo "Setting default port range"
+    echo "Setting default max connections per ip to: $FTP_MAX_CONNECTIONS"
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -C $FTP_MAX_CONNECTIONS"
 fi
 
