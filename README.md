@@ -7,7 +7,14 @@ https://hub.docker.com/r/stilliard/pure-ftpd/
 [![Docker Pulls](https://img.shields.io/docker/pulls/stilliard/pure-ftpd.svg)](https://hub.docker.com/r/stilliard/pure-ftpd/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fstilliard%2Fdocker-pure-ftpd.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fstilliard%2Fdocker-pure-ftpd?ref=badge_shield)
 
-Pull down with docker:
+
+----------------------------------------
+
+#### Check out our [basic example workflow](https://github.com/stilliard/docker-pure-ftpd/wiki/Basic-example-walk-through) & our [slightly more advanced workflow with tls & an auto created user](https://github.com/stilliard/docker-pure-ftpd/wiki/Advanced-example-walk-through-with-TLS-&-automatic-user-account).
+
+----------------------------------------
+
+Pull down latest version with docker:
 ```bash
 docker pull stilliard/pure-ftpd:hardened
 ```
