@@ -48,6 +48,9 @@ if [ ! -z "$FTP_USER_NAME" ] && [ ! -z "$FTP_USER_PASS" ] && [ ! -z "$FTP_USER_H
 then
     echo "Creating user..."
 
+    # make sure the home folder exists
+    mkdir -p "$FTP_USER_HOME"
+
     # Generate the file that will be used to inject in the password prompt stdin
     PWD_FILE="$(mktemp)"
     echo "$FTP_USER_PASS
