@@ -294,7 +294,8 @@ Credits
 Thanks for the help on stackoverflow with this!
 https://stackoverflow.com/questions/23930167/installing-pure-ftpd-in-docker-debian-wheezy-error-421
 
-
+Also thanks to all the awesome contributors that have made this project amazing!
+https://github.com/stilliard/docker-pure-ftpd/graphs/contributors
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fstilliard%2Fdocker-pure-ftpd.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fstilliard%2Fdocker-pure-ftpd?ref=badge_large)
