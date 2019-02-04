@@ -2,7 +2,7 @@
 
 # build up flags passed to this file on run + env flag for additional flags
 # e.g. -e "ADDED_FLAGS=--tls=2"
-PURE_FTPD_FLAGS="$@ $ADDED_FLAGS "
+PURE_FTPD_FLAGS=" $@ $ADDED_FLAGS "
 
 # start rsyslog
 if [[ "$PURE_FTPD_FLAGS" == *" -d "* ]] || [[ "$PURE_FTPD_FLAGS" == *"--verboselog"* ]]
