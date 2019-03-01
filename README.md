@@ -162,6 +162,8 @@ Tags available for different versions
 Usage of specific tags: 
 `sudo docker pull stilliard/pure-ftpd:hardened-1.0.36`
 
+**An arm64 build is also available here:** https://hub.docker.com/r/zhabba/pure-ftpd-arm64 *- Thanks @zhabba*
+
 ----------------------------------------
 
 Our default pure-ftpd options explained
