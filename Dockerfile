@@ -52,7 +52,6 @@ COPY --from=builder /tmp/pure-ftpd/*.deb /tmp/pure-ftpd/
 # install the new deb files
 RUN dpkg -i /tmp/pure-ftpd/pure-ftpd-common*.deb &&\
 	dpkg -i /tmp/pure-ftpd/pure-ftpd_*.deb && \
-#	apt-get install -f && \
 	rm -Rf /tmp/pure-ftpd 
 
 # Prevent pure-ftpd upgrading
