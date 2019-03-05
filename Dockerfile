@@ -45,7 +45,8 @@ RUN apt-get -y update && \
 	libc6 \
 	libcap2 \
 	libpam0g \
-	libssl1.1
+	libssl1.1 \
+	openssl
 
 COPY --from=builder /tmp/pure-ftpd/*.deb /tmp/pure-ftpd/
 
