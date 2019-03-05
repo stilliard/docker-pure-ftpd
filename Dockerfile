@@ -28,7 +28,7 @@ RUN mkdir /tmp/pure-ftpd/ && \
 	dpkg-buildpackage -b -uc | grep -v '^checking' | grep -v ': Entering directory' | grep -v ': Leaving directory'
 
 
-#Stage 2 :actual pure-ftpd image
+#Stage 2 : actual pure-ftpd image
 FROM debian:stretch
 
 # feel free to change this ;)
