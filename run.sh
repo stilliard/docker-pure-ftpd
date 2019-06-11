@@ -1,5 +1,29 @@
 #!/bin/bash
 
+# Shamelessly copied from https://github.com/docker-library/mysql/commit/4dd33136c4739667a223d39b6f829beb27b235cf
+# Allows to define ENV variables as files.
+# usage: file_env VAR [DEFAULT]
+#    ie: file_env 'FTP_USER_PASS' 'example'
+# (will allow for "$FTP_USER_PASS_FILE" to fill in the value of
+#  "$FTP_USER_PASS" from a file, especially for Docker's secrets feature)
+file_env() {
+	local var="$1"
+	local fileVar="${var}_FILE"
+	local def="${2:-}"
+	if [ "${!var:-}" ] && [ "${!fileVar:-}" ]; then
+		echo >&2 "error: both $var and $fileVar are set (but are exclusive)"
+		exit 1
+	fi
+	local val="$def"
+	if [ "${!var:-}" ]; then
+		val="${!var}"
+	elif [ "${!fileVar:-}" ]; then
+		val="$(< "${!fileVar}")"
+	fi
+	export "$var"="$val"
+	unset "$fileVar"
+}
+
 # build up flags passed to this file on run + env flag for additional flags
 # e.g. -e "ADDED_FLAGS=--tls=2"
 PURE_FTPD_FLAGS=" $@ $ADDED_FLAGS "
@@ -44,6 +68,7 @@ then
 fi
 
 # Add user
+file_env 'FTP_USER_PASS'
 if [ ! -z "$FTP_USER_NAME" ] && [ ! -z "$FTP_USER_PASS" ] && [ ! -z "$FTP_USER_HOME" ]
 then
     echo "Creating user..."
