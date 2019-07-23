@@ -196,7 +196,7 @@ There are a few spots onto which you can mount a docker volume to configure the
 server and persist uploaded data. It's recommended to use them in production. 
 
   - `/home/ftpusers/` The ftp's data volume (by convention). 
-  - `/etc/pure-ftpd/passwd` A directory containing the single `pureftps.passwd`
+  - `/etc/pure-ftpd/passwd` A directory containing the single `pureftpd.passwd`
     file which contains the user database (i.e., all virtual users, their
     passwords and their home directories). This is read on startup of the
     container and updated by the `pure-pw useradd -f /etc/pure-
