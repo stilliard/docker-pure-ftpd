@@ -18,13 +18,13 @@ RUN apt-get -y update && \
 	apt-get -y build-dep pure-ftpd
 	
 
-# build from source to add --without-capabilities flag
+# Build from source - we need to remove the need for CAP_SYS_NICE and CAP_DAC_READ_SEARCH
 RUN mkdir /tmp/pure-ftpd/ && \
 	cd /tmp/pure-ftpd/ && \
 	apt-get source pure-ftpd && \
 	cd pure-ftpd-* && \
 	./configure --with-tls | grep -v '^checking' | grep -v ': Entering directory' | grep -v ': Leaving directory' && \
-	sed -i '/^optflags=/ s/$/ --without-capabilities/g' ./debian/rules && \
+	sed -i '/CAP_SYS_NICE,/d; /CAP_DAC_READ_SEARCH/d; s/CAP_SYS_CHROOT,/CAP_SYS_CHROOT/;' src/caps_p.h && \
 	dpkg-buildpackage -b -uc | grep -v '^checking' | grep -v ': Entering directory' | grep -v ': Leaving directory'
 
 
