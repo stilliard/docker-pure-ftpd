@@ -130,7 +130,10 @@ To get verbose logs add the following to your `docker run` command:
 -e "ADDED_FLAGS=-d -d"
 ```
 
-Then if you exec into the container you could watch over the log with `tail -f /var/log/messages`
+Then the logs will be redirected to the stdout of the container and captured by the docker log collector.
+You can watch them with `docker logs -f ftpd_server`
+
+Or, if you exec into the container you could watch over the log with `tail -f /var/log/messages`
 
 Want a transfer log file? add the following to your `docker run` command:
 ```bash

@@ -9,6 +9,8 @@ if [[ "$PURE_FTPD_FLAGS" == *" -d "* ]] || [[ "$PURE_FTPD_FLAGS" == *"--verbosel
 then
     echo "Log enabled, see /var/log/messages"
     rsyslogd
+    rm -rf /var/log/pure-ftpd/pureftpd.log
+    tail --pid $$ -F /var/log/pure-ftpd/pureftpd.log &
 fi
 
 PASSWD_FILE="/etc/pure-ftpd/passwd/pureftpd.passwd"
