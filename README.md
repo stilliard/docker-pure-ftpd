@@ -16,7 +16,7 @@ https://hub.docker.com/r/stilliard/pure-ftpd/
 
 Pull down latest version with docker:
 ```bash
-docker pull stilliard/pure-ftpd:hardened
+docker pull stilliard/pure-ftpd
 ```
 
 **Often needing to run as `sudo`, e.g. `sudo docker pull stilliard/pure-ftpd`**
@@ -29,7 +29,7 @@ This is because rebuilding the entire docker image via a fork can be *very* slow
 To change the command run on start you could use the `command:` option if using `docker-compose`, or with [`docker run`](https://docs.docker.com/engine/reference/run/) directly you could use:
 
 ```
-docker run --rm -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 stilliard/pure-ftpd:hardened bash /run.sh -c 30 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P localhost -p 30000:30059
+docker run --rm -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 stilliard/pure-ftpd bash /run.sh -c 30 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P localhost -p 30000:30059
 ```
 
 To extend it you can create a new project with a `DOCKERFILE` like so:
@@ -48,7 +48,7 @@ CMD /run.sh -c 30 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLI
 Starting it 
 ------------------------------
 
-`docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" stilliard/pure-ftpd:hardened`
+`docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" stilliard/pure-ftpd`
 
 *Or for your own image, replace stilliard/pure-ftpd with the name you built it with, e.g. my-pure-ftp*
 
@@ -130,7 +130,10 @@ To get verbose logs add the following to your `docker run` command:
 -e "ADDED_FLAGS=-d -d"
 ```
 
-Then if you exec into the container you could watch over the log with `tail -f /var/log/messages`
+Then the logs will be redirected to the stdout of the container and captured by the docker log collector.
+You can watch them with `docker logs -f ftpd_server`
+
+Or, if you exec into the container you could watch over the log with `tail -f /var/log/messages`
 
 Want a transfer log file? add the following to your `docker run` command:
 ```bash
@@ -146,7 +149,7 @@ Tags available for different versions
 
 - `latest` - latest working version
 - `jessie-latest` - latest but will always remain on debian jessie
-- `hardened` - latest + [more secure/hardened defaults](https://github.com/stilliard/docker-pure-ftpd/issues/10)
+- `hardened` - latest + [added security defaults](https://github.com/stilliard/docker-pure-ftpd/issues/10)
 
 **Previous version before tags were introduced**
 
@@ -216,7 +219,7 @@ docker volume create --name my-db-volume
 
 Specify it when running the container:
 ```
-docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" -v my-db-volume:/etc/pure-ftpd/passwd stilliard/pure-ftpd:hardened
+docker run -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" -v my-db-volume:/etc/pure-ftpd/passwd stilliard/pure-ftpd
 ```
 
 When an user is added, you need to use the password file which is in the volume:

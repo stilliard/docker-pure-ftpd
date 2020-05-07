@@ -4,7 +4,7 @@ version: '2'
 
 services:
   ftpd_server:
-    image: stilliard/pure-ftpd:hardened
+    image: stilliard/pure-ftpd
     container_name: pure-ftpd
     ports:
       - "21:21"
