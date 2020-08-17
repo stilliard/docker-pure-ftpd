@@ -1,14 +1,14 @@
 #Stage 1 : builder debian image
-FROM debian:stretch as builder
+FROM debian:buster as builder
 
 # properly setup debian sources
 ENV DEBIAN_FRONTEND noninteractive
-RUN echo "deb http://http.debian.net/debian stretch main\n\
-deb-src http://http.debian.net/debian stretch main\n\
-deb http://http.debian.net/debian stretch-updates main\n\
-deb-src http://http.debian.net/debian stretch-updates main\n\
-deb http://security.debian.org stretch/updates main\n\
-deb-src http://security.debian.org stretch/updates main\n\
+RUN echo "deb http://http.debian.net/debian buster main\n\
+deb-src http://http.debian.net/debian buster main\n\
+deb http://http.debian.net/debian buster-updates main\n\
+deb-src http://http.debian.net/debian buster-updates main\n\
+deb http://security.debian.org buster/updates main\n\
+deb-src http://security.debian.org buster/updates main\n\
 " > /etc/apt/sources.list
 
 # install package building helpers
@@ -29,7 +29,7 @@ RUN mkdir /tmp/pure-ftpd/ && \
 
 
 #Stage 2 : actual pure-ftpd image
-FROM debian:stretch
+FROM debian:buster-slim
 
 # feel free to change this ;)
 LABEL maintainer "Andrew Stilliard <andrew.stilliard@gmail.com>"
@@ -39,23 +39,28 @@ LABEL maintainer "Andrew Stilliard <andrew.stilliard@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -y update && \
 	apt-get  --no-install-recommends --yes install \
-	openbsd-inetd \
-	rsyslog \
-	lsb-base \
 	libc6 \
 	libcap2 \
+    libmariadb3 \
 	libpam0g \
 	libssl1.1 \
-	openssl
+    lsb-base \
+    openbsd-inetd \
+    openssl \
+    perl \
+	rsyslog
 
 COPY --from=builder /tmp/pure-ftpd/*.deb /tmp/pure-ftpd/
 
 # install the new deb files
 RUN dpkg -i /tmp/pure-ftpd/pure-ftpd-common*.deb &&\
 	dpkg -i /tmp/pure-ftpd/pure-ftpd_*.deb && \
+	# dpkg -i /tmp/pure-ftpd/pure-ftpd-ldap_*.deb && \
+	# dpkg -i /tmp/pure-ftpd/pure-ftpd-mysql_*.deb && \
+	# dpkg -i /tmp/pure-ftpd/pure-ftpd-postgresql_*.deb && \
 	rm -Rf /tmp/pure-ftpd 
 
-# Prevent pure-ftpd upgrading
+# prevent pure-ftpd upgrading
 RUN apt-mark hold pure-ftpd pure-ftpd-common
 
 # setup ftpgroup and ftpuser
@@ -71,6 +76,12 @@ RUN echo "" >> /etc/rsyslog.conf && \
 # setup run/init file
 COPY run.sh /run.sh
 RUN chmod u+x /run.sh
+
+# cleaning up
+RUN apt-get -y clean \
+	&& apt-get -y autoclean \
+	&& apt-get -y autoremove \
+	&& rm -rf /var/lib/apt/lists/*
 
 # default publichost, you'll need to set this for passive support
 ENV PUBLICHOST localhost
