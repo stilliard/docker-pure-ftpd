@@ -303,5 +303,8 @@ https://stackoverflow.com/questions/23930167/installing-pure-ftpd-in-docker-debi
 Also thanks to all the awesome contributors that have made this project amazing!
 https://github.com/stilliard/docker-pure-ftpd/graphs/contributors
 
+You can also help support the development of this project with coffee power:
+<a href="https://www.buymeacoffee.com/stilliard" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
+
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fstilliard%2Fdocker-pure-ftpd.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fstilliard%2Fdocker-pure-ftpd?ref=badge_large)
