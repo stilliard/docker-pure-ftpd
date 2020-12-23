@@ -295,6 +295,15 @@ certificates won't be persisted and new ones will be generated on each start.
 You can also pass `-e "TLS_USE_DSAPRAM=true"` for faster generated certificates
 though this option is not recommended for production.
 
+Anonymous access
+---------------------
+To run with anonymous access, ommit the `FTP_USER_NAME`, `FTP_USER_PASS`, `FTP_USER_HOME` environment variables. The anonymous user will have a directory of `/var/ftp`
+
+You will also need to omit the `-E` switch when runing the container. An example run cmd:
+```
+CMD /run.sh -c 30 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -j -R -P 127.0.0.1 -p 30000:30059
+```
+
 Credits
 -------------
 Thanks for the help on stackoverflow with this!
