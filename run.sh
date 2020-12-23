@@ -56,7 +56,7 @@ then
     # Generate the file that will be used to inject in the password prompt stdin
     PWD_FILE="$(mktemp)"
     echo "$FTP_USER_PASS
-$FTP_USER_PASS" > "$PWD_FILE"
+	$FTP_USER_PASS" > "$PWD_FILE"
     
     # Set uid/gid
     PURE_PW_ADD_FLAGS=""
@@ -95,6 +95,11 @@ $FTP_USER_PASS" > "$PWD_FILE"
     fi
 
     rm "$PWD_FILE"
+else
+    useradd -d /var/ftp -s /sbin/nologin ftp
+	mkdir /var/ftp
+	chmod 777 /var/ftp
+	chown -R ftp:ftp /var/ftp
 fi
 
 # Set a default value to the env var FTP_PASSIVE_PORTS
