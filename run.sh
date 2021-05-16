@@ -22,7 +22,7 @@ then
 fi
 
 # detect if using TLS (from volumed in file) but no flag set, set one
-if [ -e /etc/ssl/private/pure-ftpd.pem ] && [[ "$PURE_FTPD_FLAGS" != *"--tls"* ]]
+if [ -e /etc/ssl/private/pure-ftpd.pem ] && [[ "$PURE_FTPD_FLAGS" != *"--tls"* ]] && [[ "$PURE_FTPD_FLAGS" != *"-Y"* ]]
 then
     echo "TLS Enabled"
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS --tls=1 "
