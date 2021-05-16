@@ -286,7 +286,7 @@ chmod 600 /etc/ssl/private/*.pem
 Automatic TLS certificate generation
 ------------------------------
 
-If `ADDED_FLAGS` contains `--tls` and file `/etc/ssl/private/pure-ftpd.pem` does not exists
+If `ADDED_FLAGS` contains `--tls` (e.g. --tls=1 or --tls=2) and file `/etc/ssl/private/pure-ftpd.pem` does not exists
 it is possible to generate self-signed certificate if `TLS_CN`, `TLS_ORG` and `TLS_C` are set.
 
 Keep in mind that if no volume is set for `/etc/ssl/private/` directory generated
@@ -294,6 +294,8 @@ certificates won't be persisted and new ones will be generated on each start.
 
 You can also pass `-e "TLS_USE_DSAPRAM=true"` for faster generated certificates
 though this option is not recommended for production.
+
+Please check out the [TLS docs here](https://download.pureftpd.org/pub/pure-ftpd/doc/README.TLS).
 
 Credits
 -------------
