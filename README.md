@@ -286,7 +286,7 @@ chmod 600 /etc/ssl/private/*.pem
 Automatic TLS certificate generation
 ------------------------------
 
-If `ADDED_FLAGS` contains `--tls` and file `/etc/ssl/private/pure-ftpd.pem` does not exists
+If `ADDED_FLAGS` contains `--tls` (e.g. --tls=1 or --tls=2) and file `/etc/ssl/private/pure-ftpd.pem` does not exists
 it is possible to generate self-signed certificate if `TLS_CN`, `TLS_ORG` and `TLS_C` are set.
 
 Keep in mind that if no volume is set for `/etc/ssl/private/` directory generated
@@ -295,6 +295,19 @@ certificates won't be persisted and new ones will be generated on each start.
 You can also pass `-e "TLS_USE_DSAPRAM=true"` for faster generated certificates
 though this option is not recommended for production.
 
+Please check out the [TLS docs here](https://download.pureftpd.org/pub/pure-ftpd/doc/README.TLS).
+
+TLS with cert and key file for Let's Encrypt
+------------------------------
+
+Let's Encrypt provides two separate files for certificate and keyfile. The [Pure-FTPd TLS encryption](https://download.pureftpd.org/pub/pure-ftpd/doc/README.TLS) documtionation suggests to simply concat them into one file. 
+So you can simply provide the Let's Encrypt cert ``/etc/ssl/private/pure-ftpd-cert.pem`` and key ``/etc/ssl/private/pure-ftpd-key.pem`` via Docker Volumes and let them get auto-concatenated into ``/etc/ssl/private/pure-ftpd.pem``.
+Or concat them manually with
+```sh
+cat /etc/letsencrypt/live/<your_server>/cert.pem /etc/letsencrypt/live/<your_server>/privkey.pem > pure-ftpd.pem
+```
+
+
 Credits
 -------------
 Thanks for the help on stackoverflow with this!
@@ -302,6 +315,9 @@ https://stackoverflow.com/questions/23930167/installing-pure-ftpd-in-docker-debi
 
 Also thanks to all the awesome contributors that have made this project amazing!
 https://github.com/stilliard/docker-pure-ftpd/graphs/contributors
+
+You can also help support the development of this project with coffee power:
+<a href="https://www.buymeacoffee.com/stilliard" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fstilliard%2Fdocker-pure-ftpd.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fstilliard%2Fdocker-pure-ftpd?ref=badge_large)
