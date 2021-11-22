@@ -143,6 +143,14 @@ then
     PURE_FTPD_FLAGS="$PURE_FTPD_FLAGS -C $FTP_MAX_CONNECTIONS"
 fi
 
+# Start upload script
+if [ ! -z "$FTP_UPLOADSCRIPT" ]
+then
+    echo "Starting Pure-Uploadscript"
+    chmod +x $FTP_UPLOADSCRIPT
+    /usr/sbin/pure-uploadscript -B -r $FTP_UPLOADSCRIPT &
+fi
+
 # let users know what flags we've ended with (useful for debug)
 echo "Starting Pure-FTPd:"
 echo "  pure-ftpd $PURE_FTPD_FLAGS"
