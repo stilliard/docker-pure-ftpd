@@ -300,7 +300,7 @@ Please check out the [TLS docs here](https://download.pureftpd.org/pub/pure-ftpd
 TLS with cert and key file for Let's Encrypt
 ------------------------------
 
-Let's Encrypt provides two separate files for certificate and keyfile. The [Pure-FTPd TLS encryption](https://download.pureftpd.org/pub/pure-ftpd/doc/README.TLS) documtionation suggests to simply concat them into one file. 
+Let's Encrypt provides two separate files for certificate and keyfile. The [Pure-FTPd TLS encryption](https://download.pureftpd.org/pub/pure-ftpd/doc/README.TLS) documentation suggests to simply concat them into one file. 
 So you can simply provide the Let's Encrypt cert ``/etc/ssl/private/pure-ftpd-cert.pem`` and key ``/etc/ssl/private/pure-ftpd-key.pem`` via Docker Volumes and let them get auto-concatenated into ``/etc/ssl/private/pure-ftpd.pem``.
 Or concat them manually with
 ```sh
