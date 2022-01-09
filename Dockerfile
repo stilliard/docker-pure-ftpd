@@ -23,7 +23,7 @@ RUN mkdir /tmp/pure-ftpd/ && \
 	cd /tmp/pure-ftpd/ && \
 	apt-get source pure-ftpd && \
 	cd pure-ftpd-* && \
-	./configure --with-tls | grep -v '^checking' | grep -v ': Entering directory' | grep -v ': Leaving directory' && \
+	./configure --with-tls --with-uploadscript | grep -v '^checking' | grep -v ': Entering directory' | grep -v ': Leaving directory' && \
 	sed -i '/CAP_SYS_NICE,/d; /CAP_DAC_READ_SEARCH/d; s/CAP_SYS_CHROOT,/CAP_SYS_CHROOT/;' src/caps_p.h && \
 	dpkg-buildpackage -b -uc | grep -v '^checking' | grep -v ': Entering directory' | grep -v ': Leaving directory'
 
@@ -90,6 +90,6 @@ ENV PUBLICHOST localhost
 VOLUME ["/home/ftpusers", "/etc/pure-ftpd/passwd"]
 
 # startup
-CMD /run.sh -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST
+CMD /run.sh -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -s -A -j -Z -H -4 -E -R -G -X -x
 
 EXPOSE 21 30000-30009
