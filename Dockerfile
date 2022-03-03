@@ -7,8 +7,8 @@ RUN echo "deb http://http.debian.net/debian bullseye main\n\
 deb-src http://http.debian.net/debian bullseye main\n\
 deb http://http.debian.net/debian bullseye-updates main\n\
 deb-src http://http.debian.net/debian bullseye-updates main\n\
-deb http://security.debian.org bullseye/updates main\n\
-deb-src http://security.debian.org bullseye/updates main\n\
+deb http://security.debian.org/debian-security/ bullseye-security main\n\
+deb-src http://security.debian.org/debian-security/ bullseye-security main\n\
 " > /etc/apt/sources.list
 
 # install package building helpers
