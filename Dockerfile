@@ -41,13 +41,14 @@ RUN apt-get -y update && \
 	apt-get  --no-install-recommends --yes install \
 	libc6 \
 	libcap2 \
-    libmariadb3 \
+    	libmariadb3 \
 	libpam0g \
 	libssl1.1 \
-    lsb-base \
-    openbsd-inetd \
-    openssl \
-    perl \
+	libsodium23 \
+    	lsb-base \
+    	openbsd-inetd \
+    	openssl \
+	perl \
 	rsyslog
 
 COPY --from=builder /tmp/pure-ftpd/*.deb /tmp/pure-ftpd/
